@@ -1,0 +1,7 @@
+*~
+*.o
+*.log
+*.out
+*.out.*
+*.metadata
+*.class
