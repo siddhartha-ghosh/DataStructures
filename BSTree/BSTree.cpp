@@ -26,6 +26,18 @@ void BSTree::insert(int key)
 
 }
 
+void BSTree::del(int key)
+{
+  if(root == NULL)
+  {
+    cout << endl << "Empty tree !! nothing to delete ..." << endl;
+  }
+  else
+  {
+    root = del(root,key);
+  }
+}
+
 void BSTree::preorder()
 {
   cout << endl << "Preorder: " <<endl;
@@ -78,6 +90,52 @@ void BSTree::insert(int key, Node* node)
       node->setRight(newNode);      
     }
   }
+}
+
+Node* BSTree::del(Node* node, int key)
+{
+  if(key < node->Key())
+  {
+    node->setLeft(del(node->Left(),key));
+  }
+  else if(key > node->Key())
+  {
+    node->setRight(del(node->Right(),key));
+  }
+  else
+  { // key matches with current node key
+
+    // Case 1: Node is a leaf node -- both left and right child are NULL.
+    if((node->Left() == NULL) && (node->Right() == NULL))
+    {
+      delete node;
+      return NULL;
+    }
+    // Case 2: Node has either left child or right child
+    //
+    // Case 2.1: Node has only left child
+    else if((node->Left() != NULL) && (node->Right() == NULL))
+    {
+      Node* retNode = node->Left();
+      delete node;
+      return retNode;
+    }
+    // Case 2.2: Node has only right child
+    else if((node->Left() == NULL) && (node->Right() != NULL))
+    {
+      Node* retNode = node->Right();
+      delete node;
+      return retNode;
+    }
+    // Case 3: both childs are present
+    else
+    {
+      //////////////////////////////////////
+      ////////   TBD ///////////////////////
+      //////////////////////////////////////
+    }
+  }
+  return node;
 }
 
 void BSTree::preorder(Node* node)

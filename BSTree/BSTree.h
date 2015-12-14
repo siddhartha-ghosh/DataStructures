@@ -29,7 +29,7 @@ public:
   ~BSTree();
   
   void insert(int key);
-  //void del(int num);
+  void del(int key);
   void preorder();
   void inorder();
   void postorder();
@@ -41,6 +41,7 @@ private:
   void preorder(Node* node);
   void inorder(Node* node);
   void postorder(Node* node);
+  Node* del(Node* node,int key);
 };
 
 #endif
