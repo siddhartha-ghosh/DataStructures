@@ -13,6 +13,7 @@ public:
   int Key()    { return key; }
   Node* Left()   { return left; }
   Node* Right()  { return right; }
+  void setKey(int key) { this->key = key; }
   void setLeft(Node* left)     { this->left = left; }
   void setRight(Node* right)  { this->right = right; }
 
@@ -33,6 +34,7 @@ public:
   void preorder();
   void inorder();
   void postorder();
+  void show_simple();
 
 private:
   Node* root;
@@ -42,6 +44,8 @@ private:
   void inorder(Node* node);
   void postorder(Node* node);
   Node* del(Node* node,int key);
+  Node* findLargest(Node* node);
+  void show_simple_r(Node* node);
 };
 
 #endif

@@ -59,6 +59,15 @@ void BSTree::postorder()
   cout << endl;
 }
 
+void BSTree::show_simple()
+{
+  cout << endl << "BSTree show:" << endl;
+  if(root != NULL)
+    show_simple_r(root);
+  else
+    cout << "Empty!";
+  cout << endl;
+}
 
 void BSTree::insert(int key, Node* node)
 {
@@ -107,7 +116,7 @@ Node* BSTree::del(Node* node, int key)
 
     // Case 1: Node is a leaf node -- both left and right child are NULL.
     if((node->Left() == NULL) && (node->Right() == NULL))
-    {
+    { // Node would be deleted 
       delete node;
       return NULL;
     }
@@ -115,14 +124,14 @@ Node* BSTree::del(Node* node, int key)
     //
     // Case 2.1: Node has only left child
     else if((node->Left() != NULL) && (node->Right() == NULL))
-    {
+    { // Node would be deleted, left child would take its place
       Node* retNode = node->Left();
       delete node;
       return retNode;
     }
     // Case 2.2: Node has only right child
     else if((node->Left() == NULL) && (node->Right() != NULL))
-    {
+    { // Node would be deleted, right child would take its place
       Node* retNode = node->Right();
       delete node;
       return retNode;
@@ -130,12 +139,22 @@ Node* BSTree::del(Node* node, int key)
     // Case 3: both childs are present
     else
     {
-      //////////////////////////////////////
-      ////////   TBD ///////////////////////
-      //////////////////////////////////////
+      // Node Key would be replaced with inorder predecessor key value
+      // -- inorder predecessor --> largest node in left subtree
+      Node* pred = findLargest(node->Left());
+      node->setKey(pred->Key());
+      node->setLeft(del(node->Left(),pred->Key()));
     }
   }
   return node;
+}
+
+Node* BSTree::findLargest(Node* node)
+{
+  if(node->Right() == NULL)
+    return node;
+  else
+    return findLargest(node->Right());
 }
 
 void BSTree::preorder(Node* node)
@@ -171,3 +190,21 @@ void BSTree::postorder(Node* node)
   cout << node->Key() << " ";
 }
 
+void BSTree::show_simple_r(Node* node)
+{
+  cout << node->Key();
+  if(node->Left() != NULL || node->Right() != NULL)
+  {
+    cout << "(";
+    
+    if(node->Left())
+      show_simple_r(node->Left());
+
+    cout << ",";
+
+    if(node->Right())
+      show_simple_r(node->Right());
+
+    cout << ")";
+  }
+}
