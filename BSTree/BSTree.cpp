@@ -103,47 +103,50 @@ void BSTree::insert(int key, Node* node)
 
 Node* BSTree::del(Node* node, int key)
 {
-  if(key < node->Key())
+  if(node != NULL)
   {
-    node->setLeft(del(node->Left(),key));
-  }
-  else if(key > node->Key())
-  {
-    node->setRight(del(node->Right(),key));
-  }
-  else
-  { // key matches with current node key
-
-    // Case 1: Node is a leaf node -- both left and right child are NULL.
-    if((node->Left() == NULL) && (node->Right() == NULL))
-    { // Node would be deleted 
-      delete node;
-      return NULL;
-    }
-    // Case 2: Node has either left child or right child
-    //
-    // Case 2.1: Node has only left child
-    else if((node->Left() != NULL) && (node->Right() == NULL))
-    { // Node would be deleted, left child would take its place
-      Node* retNode = node->Left();
-      delete node;
-      return retNode;
-    }
-    // Case 2.2: Node has only right child
-    else if((node->Left() == NULL) && (node->Right() != NULL))
-    { // Node would be deleted, right child would take its place
-      Node* retNode = node->Right();
-      delete node;
-      return retNode;
-    }
-    // Case 3: both childs are present
-    else
+    if(key < node->Key())
     {
-      // Node Key would be replaced with inorder predecessor key value
-      // -- inorder predecessor --> largest node in left subtree
-      Node* pred = findLargest(node->Left());
-      node->setKey(pred->Key());
-      node->setLeft(del(node->Left(),pred->Key()));
+      node->setLeft(del(node->Left(),key));
+    }
+    else if(key > node->Key())
+    {
+      node->setRight(del(node->Right(),key));
+    }
+    else
+    { // key matches with current node key
+
+      // Case 1: Node is a leaf node -- both left and right child are NULL.
+      if((node->Left() == NULL) && (node->Right() == NULL))
+      { // Node would be deleted 
+        delete node;
+        return NULL;
+      }
+      // Case 2: Node has either left child or right child
+      //
+      // Case 2.1: Node has only left child
+      else if((node->Left() != NULL) && (node->Right() == NULL))
+      { // Node would be deleted, left child would take its place
+        Node* retNode = node->Left();
+        delete node;
+        return retNode;
+      }
+      // Case 2.2: Node has only right child
+      else if((node->Left() == NULL) && (node->Right() != NULL))
+      { // Node would be deleted, right child would take its place
+        Node* retNode = node->Right();
+        delete node;
+        return retNode;
+      }
+      // Case 3: both childs are present
+      else
+      {
+        // Node Key would be replaced with inorder predecessor key value
+        // -- inorder predecessor --> largest node in left subtree
+        Node* pred = findLargest(node->Left());
+        node->setKey(pred->Key());
+        node->setLeft(del(node->Left(),pred->Key()));
+      }
     }
   }
   return node;
