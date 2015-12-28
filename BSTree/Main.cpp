@@ -8,7 +8,7 @@ int main()
 {
   cout << "Testing BSTree class ... " << endl;
 
-  BSTree<int>* bstree = new BSTree<int>();
+  BSTree* bstree = new BSTree();
 
   int input = -1;
   do

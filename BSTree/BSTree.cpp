@@ -1,24 +1,21 @@
 #include "BSTree.h"
 #include <iostream>
 
-template<class T>
-BSTree<T>::BSTree()
+BSTree::BSTree()
 {
   root = NULL;
 }
 
-template<class T>
-BSTree<T>::~BSTree()
+BSTree::~BSTree()
 {
 
 }
 
-template<class T>
-void BSTree<T>::insert(T key)
+void BSTree::insert(int key)
 {
   if(root == NULL)
   {
-    Node<T>* newNode = new Node<T>(key);
+    Node* newNode = new Node(key);
     root = newNode;
     return;
   }
@@ -29,8 +26,7 @@ void BSTree<T>::insert(T key)
 
 }
 
-template<class T>
-void BSTree<T>::del(T key)
+void BSTree::del(int key)
 {
   if(root == NULL)
   {
@@ -42,32 +38,28 @@ void BSTree<T>::del(T key)
   }
 }
 
-template<class T>
-void BSTree<T>::preorder()
+void BSTree::preorder()
 {
   cout << endl << "Preorder: " <<endl;
   preorder(root);
   cout << endl;
 }
 
-template<class T>
-void BSTree<T>::inorder()
+void BSTree::inorder()
 {
   cout << endl << "Inorder: " <<endl;
   inorder(root);
   cout << endl;
 }
 
-template<class T>
-void BSTree<T>::postorder()
+void BSTree::postorder()
 {
   cout << endl << "Postorder: " <<endl;
   postorder(root);
   cout << endl;
 }
 
-template<class T>
-void BSTree<T>::show_simple()
+void BSTree::show_simple()
 {
   cout << endl << "BSTree show:" << endl;
   if(root != NULL)
@@ -77,8 +69,7 @@ void BSTree<T>::show_simple()
   cout << endl;
 }
 
-template<class T>
-void BSTree<T>::insert(T key, Node<T>* node)
+void BSTree::insert(int key, Node* node)
 {
   if(node->Key() == key)
   {
@@ -92,7 +83,7 @@ void BSTree<T>::insert(T key, Node<T>* node)
     }
     else
     {
-      Node<T>* newNode = new Node<T>(key);
+      Node* newNode = new Node(key);
       node->setLeft(newNode);
     }
   }
@@ -104,14 +95,13 @@ void BSTree<T>::insert(T key, Node<T>* node)
     }
     else
     {
-      Node<T>* newNode = new Node<T>(key);
+      Node* newNode = new Node(key);
       node->setRight(newNode);      
     }
   }
 }
 
-template<class T>
-Node<T>* BSTree<T>::del(Node<T>* node, T key)
+Node* BSTree::del(Node* node, int key)
 {
   if(node != NULL)
   {
@@ -137,14 +127,14 @@ Node<T>* BSTree<T>::del(Node<T>* node, T key)
       // Case 2.1: Node has only left child
       else if((node->Left() != NULL) && (node->Right() == NULL))
       { // Node would be deleted, left child would take its place
-        Node<T>* retNode = node->Left();
+        Node* retNode = node->Left();
         delete node;
         return retNode;
       }
       // Case 2.2: Node has only right child
       else if((node->Left() == NULL) && (node->Right() != NULL))
       { // Node would be deleted, right child would take its place
-        Node<T>* retNode = node->Right();
+        Node* retNode = node->Right();
         delete node;
         return retNode;
       }
@@ -153,7 +143,7 @@ Node<T>* BSTree<T>::del(Node<T>* node, T key)
       {
         // Node Key would be replaced with inorder predecessor key value
         // -- inorder predecessor --> largest node in left subtree
-        Node<T>* pred = findLargest(node->Left());
+        Node* pred = findLargest(node->Left());
         node->setKey(pred->Key());
         node->setLeft(del(node->Left(),pred->Key()));
       }
@@ -162,8 +152,7 @@ Node<T>* BSTree<T>::del(Node<T>* node, T key)
   return node;
 }
 
-template<class T>
-Node<T>* BSTree<T>::findLargest(Node<T>* node)
+Node* BSTree::findLargest(Node* node)
 {
   if(node->Right() == NULL)
     return node;
@@ -171,8 +160,7 @@ Node<T>* BSTree<T>::findLargest(Node<T>* node)
     return findLargest(node->Right());
 }
 
-template<class T>
-void BSTree<T>::preorder(Node<T>* node)
+void BSTree::preorder(Node* node)
 {
   cout << node->Key() << " ";
 
@@ -183,8 +171,7 @@ void BSTree<T>::preorder(Node<T>* node)
     preorder(node->Right());
 }
 
-template<class T>
-void BSTree<T>::inorder(Node<T>* node)
+void BSTree::inorder(Node* node)
 {
   if(node->Left())
     inorder(node->Left());
@@ -195,8 +182,7 @@ void BSTree<T>::inorder(Node<T>* node)
     inorder(node->Right());
 }
 
-template<class T>
-void BSTree<T>::postorder(Node<T>* node)
+void BSTree::postorder(Node* node)
 {
   if(node->Left())
     postorder(node->Left());
@@ -207,8 +193,7 @@ void BSTree<T>::postorder(Node<T>* node)
   cout << node->Key() << " ";
 }
 
-template<class T>
-void BSTree<T>::show_simple_r(Node<T>* node)
+void BSTree::show_simple_r(Node* node)
 {
   cout << node->Key();
   if(node->Left() != NULL || node->Right() != NULL)
@@ -226,6 +211,3 @@ void BSTree<T>::show_simple_r(Node<T>* node)
     cout << ")";
   }
 }
-
-
-template class BSTree<int>;
